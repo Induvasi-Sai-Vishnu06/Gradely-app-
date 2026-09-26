@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gradely - SGPA & CGPA Calculator</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- App Container -->
+  <div class="app-wrapper">
+    
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="logo">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>Gradely</span>
+        </div>
+        <p class="header-subtitle">Fast, Precise Academic Grade & Cumulative Performance Calculator</p>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+      
+      <!-- PAGE 1: HOME SELECTION SCREEN -->
+      <section id="pageHome" class="page-home">
+        <div class="hero-section">
+          <span class="badge">Academic Tool</span>
+          <h1 class="hero-title">Select Calculation Mode</h1>
+          <p class="hero-subtitle">Choose what you want to calculate today. Your session data is automatically saved locally.</p>
+        </div>
+
+        <div class="card-grid">
+          <!-- SGPA Card -->
+          <div id="cardSgpa" class="calc-card card-sgpa">
+            <div class="card-glass-glow"></div>
+            <div class="card-inner">
+              <div class="icon-avatar avatar-sgpa">
+                <i class="fa-solid fa-book-bookmark"></i>
+              </div>
+              <h2 class="card-heading">SGPA Calculator</h2>
+              <p class="card-desc">Calculate your Semester Grade Point Average directly using credits and letter grades.</p>
+              <button type="button" class="btn-card btn-sgpa">
+                <span>Start SGPA</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- CGPA Card -->
+          <div id="cardCgpa" class="calc-card card-cgpa">
+            <div class="card-glass-glow"></div>
+            <div class="card-inner">
+              <div class="icon-avatar avatar-cgpa">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <h2 class="card-heading">CGPA Calculator</h2>
+              <p class="card-desc">Calculate your overall Cumulative Grade Point Average across all finished semesters.</p>
+              <button type="button" class="btn-card btn-cgpa">
+                <span>Start CGPA</span>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PAGE 2: CALCULATOR SCREEN -->
+      <section id="pageCalc" class="page-calc hidden">
+        
+        <!-- Navigation Bar for Page 2 -->
+        <div class="calc-nav">
+          <button type="button" id="btnBackHome" class="btn-back">
+            <i class="fa-solid fa-chevron-left"></i>
+            <span>Back to Home</span>
+          </button>
+
+          <div class="mode-toggle">
+            <button type="button" id="toggleSgpaBtn" class="toggle-option active-sgpa">SGPA Mode</button>
+            <button type="button" id="toggleCgpaBtn" class="toggle-option">CGPA Mode</button>
+          </div>
+        </div>
+
+        <!-- SGPA SECTION -->
+        <div id="sgpaCalcSection" class="calculator-panel hidden">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">SGPA Calculator</h2>
+              <p class="panel-subtitle">Select credit hours and grades for each of your course modules.</p>
+            </div>
+            <button type="button" id="btnClearSgpa" class="btn-clear" title="Clear All Rows">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+
+          <!-- Dynamic Course Rows -->
+          <div id="subjectRows" class="dynamic-rows-container"></div>
+
+          <!-- Action Buttons -->
+          <div class="action-toolbar">
+            <button type="button" id="btnAddSubject" class="btn-action btn-add-sgpa">
+              <i class="fa-solid fa-plus"></i> Add Course Row
+            </button>
+            <button type="button" id="btnCalcSgpa" class="btn-action btn-calc-sgpa">
+              <i class="fa-solid fa-calculator"></i> Calculate SGPA
+            </button>
+          </div>
+
+          <!-- SGPA Result Box -->
+          <div id="sgpaResult" class="result-box result-sgpa hidden">
+            <div class="result-header">
+              <span class="result-badge badge-indigo">Semester Performance</span>
+              <span id="sgpaHonors" class="honors-tag">--</span>
+            </div>
+            <div id="sgpaValue" class="result-value">0.00</div>
+            <div class="result-footer">
+              <span>Approx. Percentage: <strong id="sgpaPercent">0.00%</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CGPA SECTION -->
+        <div id="cgpaCalcSection" class="calculator-panel hidden">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">CGPA Calculator</h2>
+              <p class="panel-subtitle">Add your individual semester SGPA scores and total semester credits.</p>
+            </div>
+            <button type="button" id="btnClearCgpa" class="btn-clear" title="Clear All Rows">
+              <i class="fa-solid fa-rotate-left"></i> Reset
+            </button>
+          </div>
+
+          <!-- Dynamic Semester Rows -->
+          <div id="semesterRows" class="dynamic-rows-container"></div>
+
+          <!-- Action Buttons -->
+          <div class="action-toolbar">
+            <button type="button" id="btnAddSemester" class="btn-action btn-add-cgpa">
+              <i class="fa-solid fa-plus"></i> Add Semester
+            </button>
+            <button type="button" id="btnCalcCgpa" class="btn-action btn-calc-cgpa">
+              <i class="fa-solid fa-calculator"></i> Calculate CGPA
+            </button>
+          </div>
+
+          <!-- CGPA Result Box -->
+          <div id="cgpaResult" class="result-box result-cgpa hidden">
+            <div class="result-header">
+              <span class="result-badge badge-emerald">Overall Performance</span>
+              <span id="cgpaHonors" class="honors-tag">--</span>
+            </div>
+            <div id="cgpaValue" class="result-value">0.00</div>
+            <div class="result-footer">
+              <span>Approx. Percentage: <strong id="cgpaPercent">0.00%</strong></span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Gradely Grade Calculator &bull; Auto-saves your data</p>
+    </footer>
+
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>
